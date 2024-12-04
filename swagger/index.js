@@ -9,17 +9,13 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'http://localhost:4040/api', // Replace with your base URL
-    },
-    {
-      url: 'https://mritunjaay.shop/api', // Replace with your base URL
+      url: 'https://mritunjaay.shop/api', 
     },
   ],
 };
 
 const options = {
   swaggerDefinition,
-  // Point to all files containing Swagger annotations
   apis: ['./swagger/*.js', './routes/*.js'],
 };
 
