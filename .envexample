@@ -1,0 +1,5 @@
+PORT=4040
+DB=mongodb://localhost:27017/ # Add your database string(mongoDB)
+
+SMTPUSERNAME=yoursmtpemail
+SMTPPASSWORD=yoursmtppassword
