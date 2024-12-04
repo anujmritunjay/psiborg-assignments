@@ -230,3 +230,213 @@
  *     security:
  *       - BearerAuth: []  # Use the BearerAuth security scheme
  */
+
+
+/**
+ * @swagger
+ * /tasks/assign-task/{taskId}:
+ *   put:
+ *     tags:
+ *       - Task
+ *     summary: Assign a task to a user
+ *     description: Assign an existing task to a specific user by their user ID.
+ *     parameters:
+ *       - name: taskId
+ *         in: path
+ *         required: true
+ *         description: The ID of the task to assign
+ *         schema:
+ *           type: string
+ *           format: object-id
+ *           example: 507f191e810c19729de860ea
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: object-id
+ *                 description: The ID of the user to whom the task will be assigned.
+ *                 example: 507f191e810c19729de860eb
+ *     responses:
+ *       200:
+ *         description: Task assigned successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates if the operation was successful.
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message.
+ *                   example: Task assigned successfully.
+ *                 task:
+ *                   type: object
+ *                   description: The updated task details.
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: The task ID.
+ *                       example: 507f191e810c19729de860ea
+ *                     title:
+ *                       type: string
+ *                       description: The title of the task.
+ *                       example: Complete the project
+ *                     assignedTo:
+ *                       type: string
+ *                       description: The ID of the user to whom the task is assigned.
+ *                       example: 507f191e810c19729de860eb
+ *       400:
+ *         description: Invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates failure.
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Invalid task ID or user ID.
+ *       404:
+ *         description: Task or user not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates failure.
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Task not found or user not found.
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates failure.
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Internal server error.
+ *     security:
+ *       - BearerAuth: []  # Use the BearerAuth security scheme
+ */
+
+
+/**
+ * @swagger
+ * /tasks/assigned:
+ *   get:
+ *     tags:
+ *       - Task
+ *     summary: Get all assigned tasks
+ *     description: Retrieve a list of tasks that are assigned to any user.
+ *     responses:
+ *       200:
+ *         description: Successfully fetched assigned tasks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 tasks:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         description: The task ID.
+ *                       title:
+ *                         type: string
+ *                         description: The title of the task.
+ *                       description:
+ *                         type: string
+ *                         description: The description of the task.
+ *                       status:
+ *                         type: string
+ *                         enum: [not started, in progress, completed]
+ *                         description: The current status of the task.
+ *                       assignedTo:
+ *                         type: string
+ *                         description: The user ID to whom the task is assigned.
+ *       500:
+ *         description: Internal server error
+ *     security:
+ *       - BearerAuth: []  # Use the BearerAuth security scheme
+ */
+
+
+/**
+ * @swagger
+ * /tasks/analytics:
+ *   get:
+ *     tags:
+ *       - Task
+ *     summary: Get task analytics
+ *     description: Retrieve analytics for tasks, including counts of completed, pending, in-progress, and overdue tasks. Optionally filter analytics for a specific user.
+ *     parameters:
+ *       - name: userId
+ *         in: query
+ *         required: false
+ *         description: The ID of the user to filter tasks by. If not provided, analytics for all tasks will be returned.
+ *         schema:
+ *           type: string
+ *           format: object-id
+ *           example: 507f191e810c19729de860ea
+ *     responses:
+ *       200:
+ *         description: Analytics retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 analytics:
+ *                   type: object
+ *                   properties:
+ *                     completed:
+ *                       type: integer
+ *                       example: 10
+ *                     pending:
+ *                       type: integer
+ *                       example: 15
+ *                     inProgress:
+ *                       type: integer
+ *                       example: 7
+ *                     overdue:
+ *                       type: integer
+ *                       example: 4
+ *       400:
+ *         description: Invalid user ID format.
+ *       500:
+ *         description: Internal server error.
+ *     security:
+ *       - BearerAuth: []  # Use the BearerAuth security scheme
+ */

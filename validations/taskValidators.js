@@ -16,7 +16,14 @@ const updateTaskSchema = Joi.object({
   status: Joi.string().valid('not started', 'in progress', 'completed'),
 });
 
+const assignTaskSchema = Joi.object({
+  userId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required().messages({
+    'string.pattern.base': 'Invalid user ID format',
+    'any.required': 'User ID is required',
+  }),
+});
+
 module.exports = updateTaskSchema;
 
 
-module.exports = {addTaskValidation, updateTaskSchema};
+module.exports = {addTaskValidation, updateTaskSchema, assignTaskSchema};
