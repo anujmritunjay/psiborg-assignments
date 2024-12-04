@@ -9,9 +9,9 @@ const checkRole = require('../middlewares/permissionMiddleware')
 const router = express.Router()
 
 router.post('/add-task',validateRequest(addTaskValidation), authMiddleware,checkRole(['manager']), authMiddleware, addTask)
-router.get('/get-tasks',authMiddleware, getTasks );
-router.put('/update-task/:taskId',authMiddleware, validateRequest(updateTaskSchema), updateTask );
-router.delete('/delete-task/:taskId',authMiddleware, deleteTask );
+router.get('/get-tasks',authMiddleware, checkRole(['manager']), getTasks );
+router.put('/update-task/:taskId', validateRequest(updateTaskSchema), authMiddleware, checkRole(['manager']), updateTask );
+router.delete('/delete-task/:taskId',authMiddleware,checkRole(['manager']), deleteTask );
 
 
 module.exports = router
