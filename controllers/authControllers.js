@@ -1,6 +1,8 @@
 const { getHashPassword, checkPassword, getToken } = require("../services/authService")
 const User = require('../models/userModel')
-const ErrorHandler = require('../utilities/errorHandler')
+const ErrorHandler = require('../utilities/errorHandler');
+const { userSignUpTemplate } = require("../templates/signUp");
+const { sendEmail } = require("../utilities/emailHelper");
 
 exports.addUser = async (req, res, next) => {
     try {
@@ -14,6 +16,13 @@ exports.addUser = async (req, res, next) => {
         const hashPassword = await getHashPassword(payload.password);
         payload.password = hashPassword;
         const user = await User.create(payload);
+        const template = userSignUpTemplate({name: payload.username})
+        const mailObj = {
+            to: payload.email,
+            subject: `Welcome to PsiBorg`,
+            html: template
+        }
+        await sendEmail(mailObj)
         delete user.password; 
         res.json({
             success: true,
