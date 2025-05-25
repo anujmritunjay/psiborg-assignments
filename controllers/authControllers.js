@@ -19,7 +19,7 @@ exports.addUser = async (req, res, next) => {
         const template = userSignUpTemplate({name: payload.username})
         const mailObj = {
             to: payload.email,
-            subject: `Welcome to PsiBorg`,
+            subject: `Welcome to PsiBor`,
             html: template
         }
         await sendEmail(mailObj)
